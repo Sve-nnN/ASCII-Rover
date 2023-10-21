@@ -240,7 +240,7 @@ void generarMarte() {
 
 }
 int generarMeteoritoX() {
-	int generar = 1 + rand() % 77;
+	int generar = 5 + rand() % 77;
 	return generar;
 }
 int generarMeteoritoY() {
@@ -252,6 +252,7 @@ void movimientoMeteorito(int& x, int& y) {
 }
 
 void juego() {
+
 	Random r;
 	int nMeteoritosEstaticos = r.Next(7,16);
 	int nMeteoritosMoviles = r.Next(3,6);
@@ -261,6 +262,7 @@ void juego() {
 	//array para meteoritos moviles
 	int* meteoritoMovilX = new int[nMeteoritosMoviles];
 	int* meteoritoMovilY = new int[nMeteoritosMoviles];
+	int dMeteorito = 1;
 	interfaz();
 	//imprime los meteoritos estaticos
 	for (int i = 0; i < nMeteoritosEstaticos; i++) {
@@ -273,10 +275,12 @@ void juego() {
 	for (int i = 0; i < nMeteoritosMoviles; i++) {
 		meteoritoMovilX[i] = generarMeteoritoX();
 		meteoritoMovilY[i] = generarMeteoritoY();
-
+		Console::SetCursorPosition(meteoritoMovilX[i], meteoritoMovilY[i]);
+		cout << char(244);
 	}
 	generarMarte();
-
+	Console::SetCursorPosition(1, 1);
+	cout << "O---O";
 
 }
 void menuOpciones() {
@@ -302,6 +306,7 @@ void menuOpciones() {
 }
 
 int main() {
+
 	bienvenida();
 	menuOpciones();
 	Console::SetCursorPosition(81, 41);

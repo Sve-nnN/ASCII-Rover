@@ -247,36 +247,20 @@ int generarMeteoritoY() {
 	int generar = 5 + rand() % 29-5;
 	return generar;
 }
-void movimientoMeteorito(int& x, int& y) {
-
-}
-
 void juego() {
 	Random r;
-	int nMeteoritosEstaticos = r.Next(7,16);
-	int nMeteoritosMoviles = r.Next(3,6);
-	//array para la posicion de los meteoritos estaticos
-	int* meteoritoEstaticoX= new int[nMeteoritosEstaticos];
-	int* meteoritoEstaticoY=new int[nMeteoritosEstaticos];
-	//array para meteoritos moviles
-	int* meteoritoMovilX = new int[nMeteoritosMoviles];
-	int* meteoritoMovilY = new int[nMeteoritosMoviles];
+	int nMeteoritosEstaticos = 10;
+	int* meteoritoX= new int[nMeteoritosEstaticos];
+	int* meteoritoY=new int[nMeteoritosEstaticos];
+
 	interfaz();
-	//imprime los meteoritos estaticos
 	for (int i = 0; i < nMeteoritosEstaticos; i++) {
-		meteoritoEstaticoX[i] = generarMeteoritoX();
-		meteoritoEstaticoY[i] = generarMeteoritoY();
-		Console::SetCursorPosition(meteoritoEstaticoX[i], meteoritoEstaticoY[i]);
+		meteoritoX[i] = generarMeteoritoX();
+		meteoritoY[i] = generarMeteoritoY();
+		Console::SetCursorPosition(meteoritoX[i], meteoritoY[i]);
 		cout << char(r.Next('*','.'+1));
 	}
-	//imprime los meteoritos dinamicos
-	for (int i = 0; i < nMeteoritosMoviles; i++) {
-		meteoritoMovilX[i] = generarMeteoritoX();
-		meteoritoMovilY[i] = generarMeteoritoY();
-
-	}
 	generarMarte();
-
 
 }
 void menuOpciones() {

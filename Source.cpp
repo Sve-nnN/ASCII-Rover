@@ -1,9 +1,9 @@
-﻿#include<iostream>
-#include<conio.h>
+﻿
+#include <iostream>
+#include <conio.h>
 #include<Windows.h>
-
-#define MAXGOTAS 201
-#define GOTAS 10
+#define MAXGOTAS 501
+#define GOTAS 5
 
 using namespace std;
 using namespace System;
@@ -48,6 +48,10 @@ Fondo Magenta: BACKGROUND_MAGENTA
 Fondo Amarillo: BACKGROUND_YELLOW
 Fondo Blanco: BACKGROUND_WHITE
 */
+void ubica(int x, int y)
+{
+	Console::SetCursorPosition(x, y);
+}
 
 void limpiarConsola() {
 	system("cls");
@@ -77,46 +81,11 @@ void reiniciarColores() {
 }
 void lluvia() {
 
-	Random r;
-	srand(time(NULL));
-	int* x = new int[MAXGOTAS];
-	int* y = new int[MAXGOTAS];
-	//char* car = new char[MAXGOTAS];
-	int num_gotas = 0;
-	int dy = 1;
-	for (;;)//while(true)
-	{
-		for (int i = 1; i <= 80; i++) {//el margen
-			if (caidas() && num_gotas < MAXGOTAS) {
-				x[num_gotas] = i;//posición en x
-				y[num_gotas] = 10;//posición en y
-				++num_gotas;//num_gotas++
-			}
-		}
-		system("cls");
-		for (int i = 0; i < num_gotas; i++) {
-			if (y[i] < 29) {
-				Console::SetCursorPosition(x[i], y[i]);
-				Console::ForegroundColor = ConsoleColor(rand() % 16);
-				cout << "*";
-				y[i] += dy;
-			}
-			else {
-				--num_gotas;
-				x[i] = x[num_gotas];
-				y[i] = y[num_gotas];
-			}
-		}
-		_sleep(200);
-	}
-	delete[]x;
-	delete[] y;
-	_getch();
 }
 void bienvenida() {
 	int x = 40, y = 20;
 	system("cls");
-	cambiarColorAmarillo();
+	/*cambiarColorAmarillo();*/
 	string bienvenido = "Bienvenido a Mars Rover";
 	string presiona = "Presiona una tecla para comenzar";
 	int velocidad = 1;
@@ -184,7 +153,7 @@ void interfaz() {
 	}
 	//primera linea horizontal
 	Console::SetCursorPosition(1, 34);
-	for (int i = 0; i <= largo-3; i++)cout << "_";
+	for (int i = 0; i <= largo - 3; i++)cout << "_";
 
 	//lineas horizontales
 	int x = 20, y = 35;
@@ -221,16 +190,16 @@ void interfaz() {
 void generarCrater() {
 	Random r;
 	Console::SetCursorPosition(0, 0);
-	int nCrateres = r.Next(5,10);
+	int nCrateres = r.Next(5, 10);
 	int x;
 	int y;
 	for (int i = 0; i < nCrateres; i++) {
 		x = r.Next(2, 78);//1 + rand() % 79 - 1;
-		y= r.Next(32, 34);//31 + rand() % 35;
+		y = r.Next(32, 34);//31 + rand() % 35;
 		Console::SetCursorPosition(x, y);
 		cout << char(r.Next('\'', '0' + 1));
 	}
-	
+
 }
 void generarMarte() {
 	Console::SetCursorPosition(1, 30);
@@ -244,32 +213,75 @@ int generarMeteoritoX() {
 	return generar;
 }
 int generarMeteoritoY() {
-	int generar = 5 + rand() % 29-5;
+	int generar = 5 + rand() % 29 - 5;
 	return generar;
 }
 void movimientoMeteorito(int& x, int& y) {
 
 }
+void borrar_rover(int x, int y)
+{
+	ubica(x, y);     cout << "    ";
+	ubica(x, y + 1); cout << "    ";
 
+}
+
+
+void dibujar_rover(int x, int y)
+{
+	ubica(x, y);     cout << "***";
+	ubica(x, y + 1); cout << "***";
+
+}
+void borrar_transporte(int xt, int yt)
+{
+	ubica(xt, yt);     cout << "     ";
+
+
+}
+
+
+void dibujar_transporte(int xt, int yt)
+{
+	ubica(xt, yt); cout << "O---O";
+
+
+}
 void juego() {
-
+	int x, y;
+	int xt = 3, yt = 1;
 	Random r;
-	int nMeteoritosEstaticos = r.Next(7,16);
-	int nMeteoritosMoviles = r.Next(3,6);
+	srand(time(NULL));
+
+	int nMeteoritosEstaticos = r.Next(7, 16);
+	int nMeteoritosMoviles = r.Next(3, 6);
 	//array para la posicion de los meteoritos estaticos
-	int* meteoritoEstaticoX= new int[nMeteoritosEstaticos];
-	int* meteoritoEstaticoY=new int[nMeteoritosEstaticos];
+	int* meteoritoEstaticoX = new int[nMeteoritosEstaticos];
+	int* meteoritoEstaticoY = new int[nMeteoritosEstaticos];
 	//array para meteoritos moviles
 	int* meteoritoMovilX = new int[nMeteoritosMoviles];
 	int* meteoritoMovilY = new int[nMeteoritosMoviles];
 	int dMeteorito = 1;
+	//variables para la lluvia de meteoritos multicolor:
+	int* xGota = new int[MAXGOTAS];
+	int* yGota = new int[MAXGOTAS];
+	//char* car = new char[MAXGOTAS];
+	int num_gotas = 0;
+	int dy = 1;
+	for (int i = 1; i <= 77; i++) {//el margen
+		if (caidas() && num_gotas < MAXGOTAS) {
+			xGota[num_gotas] = i;//posición en x
+			yGota[num_gotas] = 10;//posición en y
+			++num_gotas;//num_gotas++
+		}
+	}
 	interfaz();
 	//imprime los meteoritos estaticos
 	for (int i = 0; i < nMeteoritosEstaticos; i++) {
 		meteoritoEstaticoX[i] = generarMeteoritoX();
 		meteoritoEstaticoY[i] = generarMeteoritoY();
 		Console::SetCursorPosition(meteoritoEstaticoX[i], meteoritoEstaticoY[i]);
-		cout << char(r.Next('*','.'+1));
+		cout << char(r.Next('*', '.' + 1));
 	}
 	//imprime los meteoritos dinamicos
 	for (int i = 0; i < nMeteoritosMoviles; i++) {
@@ -280,9 +292,67 @@ void juego() {
 	}
 	generarMarte();
 	Console::SetCursorPosition(1, 1);
-	cout << "O---O";
+	int d = 0;
+	while (1)
+	{
 
+		if (_kbhit())
+		{
+			//borrar
+			borrar_transporte(xt, yt);
+
+			//mover
+			char tecla = _getch();
+			if (d == 0) {
+				if (tecla == char(77)) xt++;
+				if (tecla == char(75)) xt--;
+				if (tecla == char(32)) { x = xt; y = yt + 1; d = 1; }
+			}
+			if (d == 1) {
+
+				//borrar
+				borrar_rover(x, y);
+
+
+
+				if (tecla == char(77) && x + 4 < 79) x++;
+
+				if (tecla == char(75) && x > 3) x--;
+
+				if (tecla == char(72) && y > 2)  y--;
+
+				if (tecla == char(80) && y + 3 < 32) y++;
+
+				dibujar_rover(x, y);
+			}
+			dibujar_transporte(xt, yt);
+			for (int i = 0; i < num_gotas; i++) {
+				if (yGota[i] < 29) {
+					Console::SetCursorPosition(x[i], y[i]);
+					cout << " ";
+					yGota[i] += dy;
+					Console::SetCursorPosition(x[i], y[i]);
+					Console::ForegroundColor = ConsoleColor(rand() % 16);
+					cout << "*";
+				}
+				else if (y[i] == 29) {
+					Console::SetCursorPosition(x[i], y[i]);
+					cout << " ";
+				}
+				else {
+					--num_gotas;
+					xGota[i] = x[num_gotas];
+					yGota[i] = y[num_gotas];
+				}
+			}
+			_sleep(200);
+
+		}
+	}
+	delete[]x;
+	delete[] y;
 }
+
 void menuOpciones() {
 	int opcion = menu();
 	switch (opcion)

@@ -255,46 +255,9 @@ void tomaMuestra(int& x, int& y,int &puntaje,int&puntajeTomaMuestra,int &muestra
 	muestraAlmacenada++;
 
 }
-void muestraViajando(int&x,int&y) {
-	for	 (int i = 1; i <= 4; i++) {
-		Console::SetCursorPosition(x, y - i);
-		if (i == 1)cout << "/\\";
-		Console::SetCursorPosition(x, y - i);
-		if (i <= 3 && i > 1)cout << " | " << endl;
-		Console::SetCursorPosition(x, y - i);
-		if (i == 4)cout << " | " << endl;
-		_sleep(50);
-	}
-}
-void eliminarMuestra(int& x, int& y) {
-	for (int i = 1; i <= 4; i++) {
-		Console::SetCursorPosition(x, y - i);
-		if (i == 1)cout << "  ";
-		Console::SetCursorPosition(x, y - i);
-		if (i <= 3 && i > 1)cout << "   " << endl;
-		Console::SetCursorPosition(x, y - i);
-		if (i == 4)cout << "    " << endl;
-		_sleep(50);
-	}
-}
-void enviarMuestra(int &x,int &y,int & muestraEnRover,int&enviado,int&recibido) {
-	int* yM = new int;
-	*yM = y;
-	if (muestraEnRover == 0) {
-		Console::SetCursorPosition(1, 1);
-		cout << "No tienes muestras tomadas. Toma una con espacio";
-		_sleep(1500);
-		Console::SetCursorPosition(1, 1);
-		cout << "                                                ";
-	}
-	else {
-		Console::SetCursorPosition(x, *yM);
-		eliminarMuestra(x, *yM);
-		y--;
-		muestraViajando(x, *yM);
-	}
-	delete yM;
-}
+
+
+
 void juego() {
 	Random r;
 	int enviado = 0, recibido = 0, altura = 200, velocidad = r.Next(1, 5), tiempo = altura / velocidad, puntaje = 0;
@@ -304,6 +267,7 @@ void juego() {
 	int puntajeMuestra = 150;
 	int puntajeAterrizaje = 200;
 	int x, y;
+	int xMuestra, yMuestra;
 	int xt = 3, yt = 1;
 	int nMeteoritosEstaticos = r.Next(7, 16);
 	int nMeteoritosMoviles = r.Next(3, 6);
@@ -375,9 +339,39 @@ void juego() {
 						tomaMuestra(x,y,puntaje,puntajeTomaMuestra,muestraAlmacenada);
 					}
 					if (tecla == 'm') {
-						enviarMuestra(x, y, muestraAlmacenada, enviado, recibido);
+						if (muestraAlmacenada == 0) {
+							Console::SetCursorPosition(1, 1);
+							cout << "No tienes muestras tomadas. Toma una con espacio";
+							_sleep(1500);
+							Console::SetCursorPosition(1, 1);
+							cout << "                                                ";
+						}
+						else {
+							xMuestra = x+1;
+							yMuestra = y;
+							if (yMuestra > 1) {
+								for (int i = 0; i < 27; i++) {
+									Console::SetCursorPosition(xMuestra, yMuestra);
+									cout << " ";
+									yMuestra-=dy;
+									Console::SetCursorPosition(xMuestra, yMuestra);
+									cout << "I";
+									_sleep(5);
+								}
+								if (yMuestra == 1) {
+									recibido++;
+								}
+
+							}
+							muestraAlmacenada--;
+							enviado++;
+
+						}
 					}
 				}
+				verificarColision(xMuestra, yMuestra, meteoritoEstaticoX, meteoritoEstaticoY, nMeteoritosEstaticos, puntaje, puntajeColision);
+				verificarColision(xMuestra, yMuestra, meteoritoMovilX, meteoritoMovilY, nMeteoritosMoviles, puntaje, puntajeColision);
+
 				verificarColision(x, y, meteoritoEstaticoX, meteoritoEstaticoY, nMeteoritosEstaticos, puntaje, puntajeColision);
 				verificarColision(x, y, meteoritoMovilX, meteoritoMovilY, nMeteoritosMoviles, puntaje, puntajeColision);
 				dibujarRover(x, y);

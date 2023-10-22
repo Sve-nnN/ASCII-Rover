@@ -241,7 +241,7 @@ void verificarColision(int x, int y, int* meteoritoX, int* meteoritoY, int numMe
 		}
 	}
 }
-void tomaMuestra(int& x, int& y,int &puntaje,int&puntajeTomaMuestra,int &muestraAlmacenada) {
+void tomaMuestra(int& x, int& y, int& puntaje, int& puntajeTomaMuestra, int& muestraAlmacenada) {
 	for (int i = 1; i <= 4; i++) {
 		Console::SetCursorPosition(x, y + i);
 		if (i == 1)cout << "_";
@@ -298,6 +298,7 @@ void juego() {
 	int dx = 1, dy = 1;
 	bool transporteDesplegado = false;
 	bool caidaLibre = false;
+	bool colisionMuestra = false;
 	while (1) {
 		dibujarTransporte(xt, yt);
 		if (_kbhit()) {
@@ -336,7 +337,7 @@ void juego() {
 					if (tecla == char(77) && x + 4 < 79) x++;
 					if (tecla == char(75) && x > 3) x--;
 					if (tecla == char(32)) {
-						tomaMuestra(x,y,puntaje,puntajeTomaMuestra,muestraAlmacenada);
+						tomaMuestra(x, y, puntaje, puntajeTomaMuestra, muestraAlmacenada);
 					}
 					if (tecla == 'm') {
 						if (muestraAlmacenada == 0) {
@@ -347,19 +348,22 @@ void juego() {
 							cout << "                                                ";
 						}
 						else {
-							xMuestra = x+1;
+							xMuestra = x + 1;
 							yMuestra = y;
 							if (yMuestra > 1) {
 								for (int i = 0; i < 27; i++) {
 									Console::SetCursorPosition(xMuestra, yMuestra);
 									cout << " ";
-									yMuestra-=dy;
+									yMuestra -= dy;
 									Console::SetCursorPosition(xMuestra, yMuestra);
 									cout << "I";
 									_sleep(5);
 								}
 								if (yMuestra == 1) {
 									recibido++;
+										puntaje += puntajeMuestra;
+										Console::SetCursorPosition(xMuestra, yMuestra);
+										cout << " ";
 								}
 
 							}
@@ -369,9 +373,6 @@ void juego() {
 						}
 					}
 				}
-				verificarColision(xMuestra, yMuestra, meteoritoEstaticoX, meteoritoEstaticoY, nMeteoritosEstaticos, puntaje, puntajeColision);
-				verificarColision(xMuestra, yMuestra, meteoritoMovilX, meteoritoMovilY, nMeteoritosMoviles, puntaje, puntajeColision);
-
 				verificarColision(x, y, meteoritoEstaticoX, meteoritoEstaticoY, nMeteoritosEstaticos, puntaje, puntajeColision);
 				verificarColision(x, y, meteoritoMovilX, meteoritoMovilY, nMeteoritosMoviles, puntaje, puntajeColision);
 				dibujarRover(x, y);

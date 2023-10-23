@@ -8,20 +8,7 @@
 using namespace std;
 using namespace System;
 
-//REQUISITOS:
-//ROVER
-//METEORITOS
-//MEDIO DE TRANSPORTE DEL ROVER
-//ENTORNO DEL VIDEOJUEGO
-//PANEL DE CONTROL
-//DINAMICA:
-//  PANTALLA DE BIENVENIDA
-//  PANTALLA DE CREDITOS
-//  PANTALLA DE INSTRUCCIONES
-//  NOMBRES DE LOS PERSONAJES
-//  INICIO DE MISION
-//  DESARROLLO DE MISION
-//  FIN DE MISION
+
 
 void cambiarColorAmarillo() {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Obtener el identificador de la consola

@@ -132,7 +132,7 @@ void menuOpciones();
 
 void creditos() {
 	limpiarConsola();
-	cout << "DISEÑO DE INTERFACES\t JUAN ANGULO\nDISEÑO FIGURAS ASCII\tMARCELO MILLA\nDESARROLLO DE FUNCIONALIDADES\tGIOVANNI OCAÑA\nDESARROLLO DE MECANICAS\tTIMOTHY DOCUMET";
+	cout << "DISEÑO DE INTERFACES Y MECANICAS\t\tJUAN ANGULO\nDISEÑO FIGURAS ASCII\t\tMARCELO MILLA\nDESARROLLO DE FUNCIONALIDADES\t\tGIOVANNI OCAÑA\nDESARROLLO DE MECANICAS Y MOVIMIENTO\t\tTIMOTHY DOCUMET";
 	cout << "\n\nPresiona una tecla para volver al menu de inicio";
 	_getch();
 	menuOpciones();
@@ -143,6 +143,8 @@ void tutorial() {
 	cout << "¿Como jugar?" << endl
 		<< "En este juego, tomas el papel del Rover Perserverance,\nel cual debe tener un aterrizaje exitoso en la superficie marciana\npara poder enviarles muestras del planeta a la tierra.";
 	cout << "\n\nTu objetivo es descender con exito al planeta rojo\nsin chocar con los meteoritos, ya que estos impediran tu aterrizaje\n";
+	cout << "\n\nPodrás mover el transportador con las flechas y podrás soltar el rover con la barra espaciadora\nPodrás mover el rover con las flechas mientras cae, tienes que evitar chocar con los asteroides,\ncaso contrario, se te restaran puntos. Una vez llegues a la superficie de marte, podras mover el rover\nde izquierda a derecha con las flechas, y con la barra espaciadora podrás tomar muestras y almacenarlas. Una vez tomadas,\ndeberas enviarlas de vuelta a la tierra presionando la tecla m. Una vez consigas 5000 puntos, ganarás la partida. \nSi se te acaba el tiempo, tu nave explorará.\n\nSUERTE EN TU VIAJE!";
+
 	cout << "\n\nPresiona una tecla para volver al menu de inicio";
 	_getch();
 	menuOpciones();

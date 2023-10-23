@@ -84,6 +84,50 @@ void bienvenida() {
 	_getch();
 }
 
+
+void introduccion() {
+	int x = 40, y = 20;
+	system("cls");
+	cambiarColor(5);
+	string titulo = "MISION A MARTE";
+	string subtitulo = "ROVER PERSEVERANCE";
+	string fecha = "Aterrizaje: 18 de febrero de 2021";
+	string lugar = "Lugar: Crater";
+	string duracion = "Presiona una tecla para comenzar";
+	int velocidad = 10;
+	Console::SetCursorPosition(x, y);
+	for (int i = 0; i < titulo.length(); i++) {
+		cout << titulo[i];
+		_sleep(velocidad);
+	}
+	y++;
+	Console::SetCursorPosition(x, y);
+	for (int i = 0; i < subtitulo.length(); i++) {
+		cout << subtitulo[i];
+		_sleep(velocidad);
+	}
+	y++;
+	Console::SetCursorPosition(x, y);
+	for (int i = 0; i < fecha.length(); i++) {
+		cout << fecha[i];
+		_sleep(velocidad);
+	}
+	y++;
+	Console::SetCursorPosition(x, y);
+	for (int i = 0; i < lugar.length(); i++) {
+		cout << lugar[i];
+		_sleep(velocidad);
+	}
+	y++;
+	Console::SetCursorPosition(x, y);
+	for (int i = 0; i < duracion.length(); i++) {
+		cout << duracion[i];
+		_sleep(velocidad);
+	}
+
+	reiniciarColores();
+	_getch();
+}
 void menuOpciones();
 
 void creditos() {
@@ -107,15 +151,19 @@ void tutorial() {
 int menu() {
 	limpiarConsola();
 	int opcion;
-	cout << "MENU"
-		<< endl
-		<< "[1] INSTRUCCIONES"
-		<< endl
-		<< "[2] JUGAR"
-		<< endl
-		<< "[3] CREDITOS"
-		<< endl
-		<< "[4] SALIR" << endl;
+	int x = 2, y = 2;
+	Console::SetCursorPosition(x, y);
+	cout << "MENU";
+	Console::SetCursorPosition(x+1, y+1);
+		cout << "[1] INSTRUCCIONES";
+		Console::SetCursorPosition(x + 1, y + 2);
+
+		cout << "[2] JUGAR";
+		Console::SetCursorPosition(x + 1, y + 3);
+
+		cout << "[3] CREDITOS";
+		Console::SetCursorPosition(x + 1, y + 4);
+		cout << "[4] SALIR" << endl;
 	do {
 		cout << "Selecciona una opcion: "; cin >> int(opcion);
 	} while (opcion < 1 || opcion>4);
@@ -224,16 +272,6 @@ int generarMeteoritoY() {
 	return generar;
 }
 
-void dibujarEstrellas() {
-	Random r;
-	int x = generarMeteoritoX();
-	int y = generarMeteoritoY();
-	int cant =r.Next(20,50+1);
-	for (int i = 0; i < cant; i++) {
-		Console::SetCursorPosition(x, y);
-		cout << "^";
-	}
-}
 void interfaz() {
 	limpiarConsola();
 	Console::SetCursorPosition(0, 0);
@@ -272,7 +310,6 @@ void interfaz() {
 		cout << "|";
 		y += 1;
 	}
-	dibujarEstrellas();
 	Console::SetCursorPosition(1, 37); cout << "~~~~~~~~~~~~~~~~~~~";
 	Console::SetCursorPosition(1, 37); cout << "~~~~~~~~~~~~~~~~~~~";
 	Console::SetCursorPosition(21, 37); cout << "~~~~~~~~~~~~~~~~~~~";
@@ -406,6 +443,7 @@ void borraMuestra(int& x, int& y, int& puntaje, int& puntajeTomaMuestra, int& mu
 
 
 void juego() {
+	introduccion();
 	Random r;
 	int enviado = 0, recibido = 0, altura = 200, velocidad = r.Next(1, 5), tiempo = 100000, puntaje = 0;
 	int muestraAlmacenada = 0;
@@ -633,6 +671,7 @@ void menuOpciones() {
 }
 
 int main() {
+	setlocale(LC_ALL, "");
 	Console::CursorVisible = false;
 	Console::SetWindowSize(80, 40);
 	bienvenida();

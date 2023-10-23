@@ -488,7 +488,6 @@ void juego() {
 			borrarTransporte(xt, yt);
 			//mover
 			char tecla = _getch();
-			tecla = tolower(tecla);
 			if (tecla == 'o')salir();
 			if (transporteDesplegado == false) {
 				if (tecla == char(77)) xt++;

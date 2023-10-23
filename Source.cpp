@@ -35,6 +35,12 @@ void cambiarColor(int color) {
 
 	SetConsoleTextAttribute(hConsole, textAndBackgroundColor); // Establecer el color del texto y el fondo
 }
+void cambiarColorLetra(char color) {
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Obtener el identificador de la consola
+	int textAndBackgroundColor = (color); // Código de color para texto en amarillo
+
+	SetConsoleTextAttribute(hConsole, textAndBackgroundColor); // Establecer el color del texto y el fondo
+}
 void reiniciarColores() {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Obtener el identificador de la consola
 	SetConsoleTextAttribute(hConsole, 7); // 7 es el código de color predeterminado para texto blanco sobre fondo negro
@@ -115,10 +121,123 @@ int menu() {
 	} while (opcion < 1 || opcion>4);
 	return opcion;
 }
+void derrotaTiempo() {
+	int x = 40, y = 20;
+	system("cls");
+	cambiarColor(4);
+	string bienvenido = "PERDISTE";
+	string presiona = "No lograste enviar la cantidad suficiente de muestras a la tierra.";
+	string salirJuego = "El juego se cerrará.";
 
+
+	int velocidad = 1;
+	Console::SetCursorPosition(x, y);
+	for (int i = 0; i < bienvenido.length(); i++) {
+		cout << bienvenido[i];
+		_sleep(velocidad);
+	}
+	Console::SetCursorPosition(x, y + 2);
+	for (int i = 0; i < presiona.length(); i++) {
+		cout << presiona[i];
+		_sleep(velocidad);
+	}
+
+	Console::SetCursorPosition(x, y + 6);
+	for (int i = 0; i < salirJuego.length(); i++) {
+		cout << salirJuego[i];
+		_sleep(velocidad);
+	}
+
+	reiniciarColores();
+	_sleep(1500);
+	salir();
+}
+void derrotaoPuntos() {
+	int x = 40, y = 20;
+	system("cls");
+	cambiarColor(4);
+	string bienvenido = "PERDISTE";
+	string presiona = "Tu nave ha explotado por los impactos de asteroides.";
+	string salirJuego = "El juego se cerrará.";
+
+
+	int velocidad = 1;
+	Console::SetCursorPosition(x, y);
+	for (int i = 0; i < bienvenido.length(); i++) {
+		cout << bienvenido[i];
+		_sleep(velocidad);
+	}
+	Console::SetCursorPosition(x, y + 2);
+	for (int i = 0; i < presiona.length(); i++) {
+		cout << presiona[i];
+		_sleep(velocidad);
+	}
+	Console::SetCursorPosition(x, y + 6);
+	for (int i = 0; i < salirJuego.length(); i++) {
+		cout << salirJuego[i];
+		_sleep(velocidad);
+	}
+
+	reiniciarColores();
+	_sleep(1500);
+	salir();
+
+}
+void victoria() {
+	int x = 40, y = 20;
+	system("cls");
+	cambiarColor(2);
+	string bienvenido = "GANASTE";
+	string presiona = "Conseguiste superar la mision. Devolveremos el rover a casa.";
+	string salirJuego = "El juego se cerrará.";
+
+
+	int velocidad = 1;
+	Console::SetCursorPosition(x, y);
+	for (int i = 0; i < bienvenido.length(); i++) {
+		cout << bienvenido[i];
+		_sleep(velocidad);
+	}
+	Console::SetCursorPosition(x, y + 2);
+	for (int i = 0; i < presiona.length(); i++) {
+		cout << presiona[i];
+		_sleep(velocidad);
+	}
+	Console::SetCursorPosition(x, y + 6);
+	for (int i = 0; i < salirJuego.length(); i++) {
+		cout << salirJuego[i];
+		_sleep(velocidad);
+	}
+
+	reiniciarColores();
+	_sleep(1500);
+	salir();
+
+}
+int generarMeteoritoX() {
+	int generar = 5 + rand() % 74;
+	return generar;
+}
+
+int generarMeteoritoY() {
+	int generar = 5 + rand() % 29 - 5;
+	return generar;
+}
+
+void dibujarEstrellas() {
+	Random r;
+	int x = generarMeteoritoX();
+	int y = generarMeteoritoY();
+	int cant =r.Next(20,50+1);
+	for (int i = 0; i < cant; i++) {
+		Console::SetCursorPosition(x, y);
+		cout << "^";
+	}
+}
 void interfaz() {
 	limpiarConsola();
 	Console::SetCursorPosition(0, 0);
+	cambiarColor(8);
 	int alto = 40;
 	int largo = 80;
 	for (int i = 1; i <= alto; i++) {
@@ -129,30 +248,40 @@ void interfaz() {
 		}
 		cout << endl;
 	}
-	Console::SetCursorPosition(1, 34);
+	Console::SetCursorPosition(1, 35);
 	for (int i = 0; i <= largo - 3; i++) cout << "_";
 
 	//lineas horizontales
-	int x = 20, y = 35;
-	for (int i = 1; i < 5; i++) {
+	int x = 20, y = 36;
+	for (int i = 1; i < 4; i++) {
 		Console::SetCursorPosition(x, y);
 		cout << "|";
 		y += 1;
 	}
 	x = 40;
-	y = 35;
-	for (int i = 1; i < 5; i++) {
+	y = 36;
+	for (int i = 1; i < 4; i++) {
 		Console::SetCursorPosition(x, y);
 		cout << "|";
 		y += 1;
 	}
 	x = 60;
-	y = 35;
-	for (int i = 1; i < 5; i++) {
+	y = 36;
+	for (int i = 1; i <4; i++) {
 		Console::SetCursorPosition(x, y);
 		cout << "|";
 		y += 1;
 	}
+	dibujarEstrellas();
+	Console::SetCursorPosition(1, 37); cout << "~~~~~~~~~~~~~~~~~~~";
+	Console::SetCursorPosition(1, 37); cout << "~~~~~~~~~~~~~~~~~~~";
+	Console::SetCursorPosition(21, 37); cout << "~~~~~~~~~~~~~~~~~~~";
+	Console::SetCursorPosition(41, 37); cout << "~~~~~~~~~~~~~~~~~~~";
+
+
+
+
+	reiniciarColores();
 
 
 }
@@ -160,12 +289,12 @@ void interfaz() {
 void generarCrater() {
 	Random r;
 	Console::SetCursorPosition(0, 0);
-	int nCrateres = r.Next(5, 10);
+	int nCrateres = r.Next(45, 45);
 	int x;
 	int y;
 	for (int i = 0; i < nCrateres; i++) {
-		x = r.Next(2, 78);
-		y = r.Next(32, 34);
+		x = r.Next(1, 78);
+		y = r.Next(31, 35);
 		Console::SetCursorPosition(x, y);
 		cout << char(r.Next('\'', '0' + 1));
 	}
@@ -179,15 +308,6 @@ void generarMarte() {
 	reiniciarColores();
 }
 
-int generarMeteoritoX() {
-	int generar = 5 + rand() % 77;
-	return generar;
-}
-
-int generarMeteoritoY() {
-	int generar = 5 + rand() % 29 - 5;
-	return generar;
-}
 
 void dibujarMeteoritoEstatico(int x, int y) {
 	Console::SetCursorPosition(x, y);
@@ -241,26 +361,53 @@ void verificarColision(int x, int y, int* meteoritoX, int* meteoritoY, int numMe
 		}
 	}
 }
+int verificarColisionM(int x, int y, int* meteoritoX, int* meteoritoY, int numMeteoritos, int& puntaje, int puntajeColision) {
+	int c = 0;
+	for (int i = 0; i < numMeteoritos; i++) {
+		if (x == meteoritoX[i] && y == meteoritoY[i]) {
+			// Se detectó una colisión entre la muestra y un meteorito.
+			Console::SetCursorPosition(x, y); cout << " ";
+			_getch();
+
+			meteoritoX[i] = generarMeteoritoX();
+			meteoritoY[i] = generarMeteoritoY();
+			c = 1;
+		}
+	}
+	return c;
+}
+
 void tomaMuestra(int& x, int& y, int& puntaje, int& puntajeTomaMuestra, int& muestraAlmacenada) {
 	for (int i = 1; i <= 4; i++) {
 		Console::SetCursorPosition(x, y + i);
-		if (i == 1)cout << "_";
+		if (i == 1)cout << "__";
 		Console::SetCursorPosition(x, y + i);
 		if (i <= 3 && i > 1)cout << "||" << endl;
 		Console::SetCursorPosition(x, y + i);
-		if (i == 4)cout << "V" << endl;
+		if (i == 4)cout << "VV" << endl;
 		_sleep(50);
 	}
 	puntaje += puntajeTomaMuestra;
 	muestraAlmacenada++;
 
 }
+void borraMuestra(int& x, int& y, int& puntaje, int& puntajeTomaMuestra, int& muestraAlmacenada) {
+	for (int i = 1; i <= 4; i++) {
+		Console::SetCursorPosition(x, y + i);
+		if (i == 1)cout << "  ";
+		Console::SetCursorPosition(x, y + i);
+		if (i <= 3 && i > 1)cout << "  " << endl;
+		Console::SetCursorPosition(x, y + i);
+		if (i == 4)cout << "  " << endl;
+		_sleep(50);
+	}
 
+}
 
 
 void juego() {
 	Random r;
-	int enviado = 0, recibido = 0, altura = 200, velocidad = r.Next(1, 5), tiempo = altura / velocidad, puntaje = 0;
+	int enviado = 0, recibido = 0, altura = 200, velocidad = r.Next(1, 5), tiempo = 100000, puntaje = 0;
 	int muestraAlmacenada = 0;
 	int puntajeColision = 50;
 	int puntajeTomaMuestra = 20;
@@ -287,18 +434,12 @@ void juego() {
 		meteoritoEstaticoY[i] = generarMeteoritoY();
 		dibujarMeteoritoEstatico(meteoritoEstaticoX[i], meteoritoEstaticoY[i]);
 	}
-	//imprime los meteoritos dinamicos
-	for (int i = 0; i < nMeteoritosMoviles; i++) {
-		meteoritoMovilX[i] = generarMeteoritoX();
-		meteoritoMovilY[i] = generarMeteoritoY();
-		dibujarMeteoritoMovil(meteoritoMovilX[i], meteoritoMovilY[i]);
-	}
 	generarMarte();
 	Console::SetCursorPosition(1, 1);
 	int dx = 1, dy = 1;
 	bool transporteDesplegado = false;
 	bool caidaLibre = false;
-	bool colisionMuestra = false;
+	int c = 0;
 	while (1) {
 		dibujarTransporte(xt, yt);
 		if (_kbhit()) {
@@ -325,7 +466,7 @@ void juego() {
 					//velocidad en caida libre
 					y += dy;
 					//modifico altura
-					altura -= velocidad;
+					altura -= 8;
 					if (tecla == char(77) && x + 4 < 77) x++;
 					if (tecla == char(75) && x > 3) x--;
 					if (y == 28) {
@@ -338,11 +479,14 @@ void juego() {
 					if (tecla == char(75) && x > 3) x--;
 					if (tecla == char(32)) {
 						tomaMuestra(x, y, puntaje, puntajeTomaMuestra, muestraAlmacenada);
+						borraMuestra(x, y, puntaje, puntajeTomaMuestra, muestraAlmacenada);
 					}
 					if (tecla == 'm') {
 						if (muestraAlmacenada == 0) {
 							Console::SetCursorPosition(1, 1);
+							cambiarColor(6);
 							cout << "No tienes muestras tomadas. Toma una con espacio";
+							reiniciarColores();
 							_sleep(1500);
 							Console::SetCursorPosition(1, 1);
 							cout << "                                                ";
@@ -350,20 +494,33 @@ void juego() {
 						else {
 							xMuestra = x + 1;
 							yMuestra = y;
-							if (yMuestra > 1) {
+							if (yMuestra > 1&&c!=1) {
 								for (int i = 0; i < 27; i++) {
-									Console::SetCursorPosition(xMuestra, yMuestra);
-									cout << " ";
-									yMuestra -= dy;
-									Console::SetCursorPosition(xMuestra, yMuestra);
-									cout << "I";
-									_sleep(5);
-								}
-								if (yMuestra == 1) {
-									recibido++;
-										puntaje += puntajeMuestra;
+									if (c != 1) {
 										Console::SetCursorPosition(xMuestra, yMuestra);
 										cout << " ";
+										yMuestra -= dy;
+										Console::SetCursorPosition(xMuestra, yMuestra);
+										cout << "I";
+										verificarColisionM(xMuestra, yMuestra, meteoritoEstaticoX, meteoritoEstaticoY, nMeteoritosEstaticos, puntaje, puntajeColision);
+										verificarColisionM(xMuestra, yMuestra, meteoritoMovilX, meteoritoMovilY, nMeteoritosMoviles, puntaje, puntajeColision);
+
+										_sleep(25);
+									}
+									else {
+										recibido--;
+										Console::SetCursorPosition(xMuestra, yMuestra);
+										cout << " ";
+										yMuestra -= dy;
+										Console::SetCursorPosition(xMuestra, yMuestra);
+										cout << " ";
+									}
+								}
+								if (yMuestra == 1&&c==0) {
+									Console::SetCursorPosition(xMuestra, yMuestra);
+									cout << " ";
+									recibido++;
+									puntaje = puntaje + (recibido * puntajeMuestra);
 								}
 
 							}
@@ -373,6 +530,8 @@ void juego() {
 						}
 					}
 				}
+
+
 				verificarColision(x, y, meteoritoEstaticoX, meteoritoEstaticoY, nMeteoritosEstaticos, puntaje, puntajeColision);
 				verificarColision(x, y, meteoritoMovilX, meteoritoMovilY, nMeteoritosMoviles, puntaje, puntajeColision);
 				dibujarRover(x, y);
@@ -381,9 +540,10 @@ void juego() {
 			dibujarTransporte(xt, yt);
 
 		}
+		//lluvia de meteoritos
 		for (int i = 0; i < nMeteoritosMoviles; i++) {
 
-			if (meteoritoMovilY[i] < 30) {
+			if (meteoritoMovilY[i]>0&&meteoritoMovilY[i] <= 29 && meteoritoMovilX[i]<78) {
 
 				if (meteoritoMovilY[i] > yt && meteoritoMovilY[i] < yt + 4) {
 
@@ -391,6 +551,10 @@ void juego() {
 
 						puntaje -= puntajeColision;
 					}
+				}
+				if (meteoritoMovilY[i] == 29) {
+					Console::SetCursorPosition(meteoritoMovilX[i], meteoritoMovilY[i]);
+					cout << " ";
 				}
 				dibujarMeteoritoMovil(meteoritoMovilX[i], meteoritoMovilY[i]);
 			}
@@ -403,33 +567,40 @@ void juego() {
 		//borro
 		Console::SetCursorPosition(1, 36); cout << "Enviado: " << "      ";
 		//imprimo
-		Console::SetCursorPosition(1, 36); cout << "Enviado: " << enviado;
-		Console::SetCursorPosition(1, 37); cout << "~~~~~~~~~~~~~~~~~~~";
+		Console::SetCursorPosition(1, 36); cout << "Enviado: " << enviado << " Mtras";
 		//borro
 		Console::SetCursorPosition(1, 38); cout << "Recibido: " << "     ";
 		//imprimo
-		Console::SetCursorPosition(1, 38); cout << "Recibido: " << recibido;
+		Console::SetCursorPosition(1, 38); cout << "Recibido: " << recibido<<" Mtras";
 		//borro
 		Console::SetCursorPosition(22, 36); cout << "Velocidad: " << "       ";
 		//imprimo
-		Console::SetCursorPosition(22, 36); cout << "Velocidad: " << velocidad;
-		Console::SetCursorPosition(21, 37); cout << "~~~~~~~~~~~~~~~~~~~";
+		Console::SetCursorPosition(22, 36); cout << "Velocidad: " << velocidad<<"Km/h";
 		//borro
 		Console::SetCursorPosition(22, 38); cout << "Altura: " << "        ";
 		//imprimo
-		Console::SetCursorPosition(22, 38); cout << "Altura: " << altura;
+		Console::SetCursorPosition(22, 38); cout << "Altura: " << altura+8<<"Km";
 		//borro
 		Console::SetCursorPosition(42, 38); cout << "Puntos: " << "       ";
 		//imprimo
 		Console::SetCursorPosition(42, 38); cout << "Puntos: " << puntaje;
-		Console::SetCursorPosition(41, 37); cout << "~~~~~~~~~~~~~~~~~~~";
-		Console::SetCursorPosition(42, 36); cout << "M en rover " << "          ";
+		Console::SetCursorPosition(42, 36); cout << "Mtras en rover " << "  ";
 		//imprimo
-		Console::SetCursorPosition(42, 36); cout << "M en Rover: " << muestraAlmacenada;
+		Console::SetCursorPosition(42, 36); cout << "Mtras en Rover: " << muestraAlmacenada;
 		//borro
 		Console::SetCursorPosition(62, 37); cout << "Tiempo: " << "        ";
 
-		Console::SetCursorPosition(62, 37); cout << "Tiempo: " << tiempo;
+		Console::SetCursorPosition(62, 37); cout << "Tiempo: " << tiempo << " s";
+
+		if (puntaje >= 5000) {
+			victoria();
+		}
+		if (puntaje < -700) {
+			derrotaoPuntos();
+		}
+		if (tiempo == 0) {
+			derrotaTiempo();
+		}
 		_sleep(100);
 	}
 
@@ -462,6 +633,8 @@ void menuOpciones() {
 }
 
 int main() {
+	Console::CursorVisible = false;
+	Console::SetWindowSize(80, 40);
 	bienvenida();
 	menuOpciones();
 	Console::SetCursorPosition(81, 41);
